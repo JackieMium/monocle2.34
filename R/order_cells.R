@@ -916,7 +916,7 @@ extract_ddrtree_ordering <- function(cds, root_cell, verbose=T)
 
   mst_traversal <- graph.dfs(dp_mst,
                              root=root_cell,
-                             neimode = "all",
+                             mode = "all",
                              unreachable=FALSE,
                              father=TRUE)
   mst_traversal$father <- as.numeric(mst_traversal$father)
