@@ -93,7 +93,7 @@ plot_cell_trajectory <- function(cds,
   
   ica_space_df <- Matrix::t(reduced_dim_coords) %>%
     as.data.frame() %>%
-    select_(prin_graph_dim_1 = x, prin_graph_dim_2 = y) %>%
+    select(prin_graph_dim_1 = x, prin_graph_dim_2 = y) %>%
     mutate(sample_name = rownames(.), sample_state = rownames(.))
   
   dp_mst <- minSpanningTree(cds)
@@ -104,13 +104,13 @@ plot_cell_trajectory <- function(cds,
   
   edge_df <- dp_mst %>%
     igraph::as_data_frame() %>%
-    select_(source = "from", target = "to") %>%
-    left_join(ica_space_df %>% select_(source="sample_name", source_prin_graph_dim_1="prin_graph_dim_1", source_prin_graph_dim_2="prin_graph_dim_2"), by = "source") %>%
-    left_join(ica_space_df %>% select_(target="sample_name", target_prin_graph_dim_1="prin_graph_dim_1", target_prin_graph_dim_2="prin_graph_dim_2"), by = "target")
+    select(source = "from", target = "to") %>%
+    left_join(ica_space_df %>% select(source="sample_name", source_prin_graph_dim_1="prin_graph_dim_1", source_prin_graph_dim_2="prin_graph_dim_2"), by = "source") %>%
+    left_join(ica_space_df %>% select(target="sample_name", target_prin_graph_dim_1="prin_graph_dim_1", target_prin_graph_dim_2="prin_graph_dim_2"), by = "target")
   
   data_df <- t(monocle::reducedDimS(cds)) %>%
     as.data.frame() %>%
-    select_(data_dim_1 = x, data_dim_2 = y) %>%
+    select(data_dim_1 = x, data_dim_2 = y) %>%
     rownames_to_column("sample_name") %>%
     mutate(sample_state) %>%
     left_join(lib_info_with_pseudo %>% rownames_to_column("sample_name"), by = "sample_name")

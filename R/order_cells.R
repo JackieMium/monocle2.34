@@ -958,7 +958,7 @@ extract_ddrtree_ordering <- function(cds, root_cell, verbose=T)
 
 #' @importFrom stats dist
 #' @importFrom igraph graph.adjacency minimum.spanning.tree V
-select_root_cell <- function(cds, root_state=NULL, reverse=FALSE){
+selectroot_cell <- function(cds, root_state=NULL, reverse=FALSE){
   if (is.null(root_state) == FALSE) {
     if (is.null(pData(cds)$State)){
       stop("Error: State has not yet been set. Please call orderCells() without specifying root_state, then try this call again.")
@@ -1077,7 +1077,7 @@ orderCells <- function(cds,
     stop("Error: dimension reduction didn't prodvide correct results. Please check your reduceDimension() step and ensure correct dimension reduction are performed before calling this function.")
   }
 
-  root_cell <- select_root_cell(cds, root_state, reverse)
+  root_cell <- selectroot_cell(cds, root_state, reverse)
 
   cds@auxOrderingData <- new.env( hash=TRUE )
   if (cds@dim_reduce_type == "ICA"){
@@ -1142,7 +1142,7 @@ orderCells <- function(cds,
     tip_leaves <- names(which(degree(minSpanningTree(cds)) == 1))
     root_cell <- cells_mapped_to_graph_root[cells_mapped_to_graph_root %in% tip_leaves][1]
     if(is.na(root_cell)) {
-      root_cell <- select_root_cell(cds, root_state, reverse)
+      root_cell <- selectroot_cell(cds, root_state, reverse)
     }
 
     cds@auxOrderingData[[cds@dim_reduce_type]]$root_cell <- root_cell

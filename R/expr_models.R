@@ -512,10 +512,10 @@ estimateDispersionsForCellDataSet <- function(cds, modelFormulaStr, relative_exp
   # FIXME: this needs refactoring, badly.
   if (cds@expressionFamily@vfamily %in% c("negbinomial", "negbinomial.size")){
     if (length(model_terms) > 1 || (length(model_terms) == 1 && model_terms[1] != "1")){
-      cds_pdata <- dplyr::group_by_(dplyr::select_(rownames_to_column(pData(cds)), "rowname", .dots=model_terms), .dots=model_terms)
+      cds_pdata <- dplyr::group_by(dplyr::select(rownames_to_column(pData(cds)), "rowname", .dots=model_terms), .dots=model_terms)
       disp_table <- as.data.frame(cds_pdata %>% do(disp_calc_helper_NB(cds[,.$rowname], cds@expressionFamily, min_cells_detected)))
     }else{
-      cds_pdata <- dplyr::group_by_(dplyr::select_(rownames_to_column(pData(cds)), "rowname"))
+      cds_pdata <- dplyr::group_by(dplyr::select(rownames_to_column(pData(cds)), "rowname"))
       disp_table <- as.data.frame(cds_pdata %>% do(disp_calc_helper_NB(cds[,.$rowname], cds@expressionFamily, min_cells_detected)))
       #disp_table <- data.frame(rowname = names(type_res), CellType = type_res)
     }
