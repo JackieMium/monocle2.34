@@ -6,7 +6,7 @@ cth_classifier_cds <- function(cds_subset, cth, curr_node, frequency_thresh) {
   #curr_cell_vertex <-  V(cth@classificationTree)[curr_node]
   next_nodes <- c()
   #print (unique(pData(cds_subset)$Cluster))
-  for (child in V(cth@classificationTree) [ suppressWarnings(nei(curr_node, mode="out")) ]){
+  for (child in V(cth@classificationTree) [ suppressWarnings(.nei(curr_node, mode="out")) ]){
     
     child_cell_class_func <- V(cth@classificationTree) [ child ]$classify_func[[1]]
     #type_res <- sparseApply(exprs(cds_subset), 2, child_cell_class_func, convert_to_dense=FALSE)
@@ -48,7 +48,7 @@ classifyCellsHelperCds <- function(cds_subset, cth, frequency_thresh){
 #' @importFrom igraph V
 cth_classifier_cell <- function(cell_name, cth, curr_node, gate_res) {
   next_nodes <- c()
-  for (child in V(cth@classificationTree) [ suppressWarnings(nei(curr_node, mode="out")) ]){
+  for (child in V(cth@classificationTree) [ suppressWarnings(.nei(curr_node, mode="out")) ]){
     type_res <- gate_res[[V(cth@classificationTree) [ child ]$name]]
     #print (class(type_res[cell_name]))
     #print (cell_name)
